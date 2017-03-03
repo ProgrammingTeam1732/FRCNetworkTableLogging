@@ -1,13 +1,13 @@
-# FIRST FRC Team 1732's Networktables Data Logger
+# FIRST FRC Team 1732's NetworkTable/SmartDashboard Data Logger
 
 Developed for the 2017 season to more easily view shooter velocity graphs.
 
-It uses the WPI Libraries's Networktables code in java.
-WPILibrary: http://first.wpi.edu/
+It uses the WPI Libraries's NetworkTable code. WPILibrary: http://first.wpi.edu/
+It also uses opencsv. Opencsv: http://opencsv.sourceforge.net/
 
 Steps to use this:
 
-1. Download and extract the ZIP file above.
+1. Download and extract the ZIP file above (click the file to view, click download in top right area)
 
 2. Save your team number in the "Config" file on the first line. (The Config starts off as my team's config file as an example, feel free to delete all of the text inside  )
 
