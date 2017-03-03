@@ -9,13 +9,13 @@ Steps to use this:
 
 1. Download and extract the ZIP file above.
 
-2. Save your team number in the "Config" file on the first line. (The Config starts off with my team's config file as an example, feel free to delete all of the text inside")
+2. Save your team number in the "Config" file on the first line. (The Config starts off as my team's config file as an example, feel free to delete all of the text inside  )
 
 3. To log values from the Networktables, save the key Strings for those values on seperate lines below the team number
 
 4. For further clarification, look inside the "ExampleConfig" file inside the zip.
 
-5. Run this by using the batch file inside the zip. (all this does is use the command line to do "java -jar Logger.jar"
+5. Run this by using the batch file inside the zip. (all this does is use the command line to do "java -jar Logger.jar")
 
 Make sure you have java installed.
 
