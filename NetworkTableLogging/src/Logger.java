@@ -1,7 +1,12 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.opencsv.CSVWriter;
 
@@ -14,12 +19,13 @@ public class Logger {
 	private static long		startTime;
 
 	// Config fields
-	private static final String	ConfigFileName		= "Config.txt";
-	private static final String	LoggerFilesFolder	= "LoggerFiles";
+	private static final String	configFileName		= "Config.txt";
+	private static final String	loggerFilesFolder	= "LoggerFiles";
 	private static final String	tableKey			= "SmartDashboard";
 	// private static final String networkIdentity = "networkIdentity";
 	private static int			teamNumber;
 	private static String[]		keys;
+	private static String[]		types;
 	private static NetworkTable	table;
 
 	// Logging fields
@@ -52,8 +58,36 @@ public class Logger {
 	 * Reads in the data from the config file
 	 */
 	private static void readConfigFile() {
-		teamNumber = 1732; // read from config
-		keys = new String[] { "A", "B", "C", "Time" };
+		System.out.println("Reading config file");
+		ArrayList<String> keyList = new ArrayList<String>(0);
+		ArrayList<String> typeList = new ArrayList<String>(0);
+		try (BufferedReader br = new BufferedReader(new FileReader(configFileName))) {
+			String line = br.readLine();
+			if (line != null) {
+				teamNumber = Integer.parseInt(line);
+			} else {
+				return;
+			}
+			String line1;
+			String line2;
+			while ((line1 = br.readLine()) != null && (line2 = br.readLine()) != null) {
+				keyList.add(line1.trim());
+				typeList.add(line2.trim().toLowerCase());
+			}
+		} catch (FileNotFoundException e) {
+			System.err.print("Error opening config file");
+			e.printStackTrace();
+		} catch (IOException e1) {
+			System.out.println("Error reading config file");
+			e1.printStackTrace();
+		}
+		keyList.add("Time");
+		keyList.toArray(Logger.keys);
+		typeList.toArray(Logger.types);
+		System.out.println("Config file:");
+		System.out.println("Team number: " + teamNumber);
+		System.out.println("Keys: " + Arrays.toString(keys));
+		System.out.println("Ty[es: " + Arrays.toString(types));
 	}
 
 	/**
@@ -111,7 +145,7 @@ public class Logger {
 			if (csvWriter != null)
 				csvWriter.close();
 		} catch (IOException e) {
-			System.out.println("Error closing csvWriter");
+			System.err.println("Error closing csvWriter");
 			e.printStackTrace();
 		}
 	}
@@ -120,7 +154,7 @@ public class Logger {
 		try {
 			csvWriter = new CSVWriter(new FileWriter(getCSVFileName()));
 		} catch (IOException e) {
-			System.out.println("Error opening csvWriter");
+			System.err.println("Error opening csvWriter");
 			e.printStackTrace();
 		}
 		csvWriter.writeNext(keys);
@@ -130,7 +164,13 @@ public class Logger {
 	private static void writeToLogFile() {
 		String[] values = new String[keys.length];
 		for (int i = 0; i < values.length - 1; i++) {
-			values[i] = table.getString(keys[i], "0");
+			if (types[i].equals("string")) {
+				values[i] = table.getString(keys[i], "null");
+			} else if (types[i].equals("number")) {
+				values[i] = "" + table.getNumber(keys[i], 0);
+			} else if (types[i].equals("boolean")) {
+				values[i] = "" + table.getBoolean(keys[i], false);
+			}
 		}
 		values[keys.length - 1] = "" + getElapsedTime();
 		csvWriter.writeNext(values);
@@ -139,7 +179,7 @@ public class Logger {
 	private static final String logFront = "Log:";
 
 	private static String getCSVFileName() {
-		return LoggerFilesFolder + "\\" + logFront + dtf.format(LocalDateTime.now()) + ".csv";
+		return loggerFilesFolder + "\\" + logFront + dtf.format(LocalDateTime.now()) + ".csv";
 	}
 
 	private static long getElapsedTime() {
