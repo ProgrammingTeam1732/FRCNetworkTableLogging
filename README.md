@@ -9,23 +9,21 @@ Steps to use this:
 
 1. Download and extract the ZIP file above.
 
-2. Save your team number in the "config" file on the first line.
+2. Save your team number in the "Config" file on the first line.
 
 3. To log values from the Networktables, save the key Strings for those values on seperate lines below the team number
 
-4. For further clarification, look inside the "example_config" file inside the zip.
+4. For further clarification, look inside the "ExampleConfig" file inside the zip.
 
-5. Run this by using the batch file inside the zip.
+5. Run this by using the batch file inside the zip. (all this does is use the command line to do "java -jar Logger.jar"
 
 Make sure you have java installed.
 
-This code was written for a DriverStation NetworkTables client running Windows 10. It will probably not work on other operating systems, but you can try. To make it work on other systems, you will need to download the correct version of the jar from here: http://first.wpi.edu/FRC/roborio/maven/release/edu/wpi/first/wpilib/networktables/java/NetworkTables/3.1.7/
-
-Note that link may be outdated and there might be a newer version. Download the correct version for your system and save it into the extracted zip folder instead of the version that is there.
+This code was written for a DriverStation NetworkTables client running Windows 10. It will almost definetly not work on other operating systems, but you can try.
 
 How values are saved
 
-1. Inside the extracted zip, there is a folder claled "logfiles"
+1. Inside the extracted zip, there is a folder claled "LoggerFiles"
 
 2. This folder contains all the csv files the logger has saved
 
@@ -33,4 +31,4 @@ How values are saved
 
 4. To run this, use the command line or, if on windows, just run the batch file inside the folder.
 
-5. To view how the log file is formatted, inside the extracted zip folder, click on the "log_file_format" file.
+5. To view how the log file is formatted, inside the extracted zip folder, click on the "LogFileFormat" file.
