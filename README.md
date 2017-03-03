@@ -15,7 +15,7 @@ Steps to use this:
 
 4. For further clarification, look inside the "example_config" file inside the zip.
 
-5. Run this by using the batch file inside the zip.
+5. Run this by using the batch file inside the zip. (all this does is use the command line to do "java -jar Logger.jar"
 
 Make sure you have java installed.
 
