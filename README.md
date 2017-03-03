@@ -1,5 +1,6 @@
-# SmartDashboardLogging
-FIRST FRC Team 1732's Networktables Data Logger!
+# FIRST FRC Team 1732's Networktables Data Logger
+
+Developed for the 2017 season to more easily view shooter velocity graphs.
 
 It uses the WPI Libraries's Networktables code in java.
 WPILibrary: http://first.wpi.edu/
