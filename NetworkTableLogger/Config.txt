@@ -5,3 +5,5 @@ Flywheel/Voltage
 number
 Flywheel/Error
 number
+Drive Train/Right/Right Encoder Raw Counts
+number
