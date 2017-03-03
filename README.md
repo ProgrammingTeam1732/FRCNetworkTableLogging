@@ -19,7 +19,7 @@ Steps to use this:
 
 Make sure you have java installed.
 
-This code was written for a DriverStation NetworkTables client running Windows 10. It will almost definetly not work on other operating systems, but you can try.
+This code was written for a DriverStation NetworkTables client running Windows. It will almost definetly not work on other operating systems, but you can try.
 
 How values are saved
 
