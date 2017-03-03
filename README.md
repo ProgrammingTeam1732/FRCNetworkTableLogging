@@ -9,11 +9,11 @@ Steps to use this:
 
 1. Download and extract the ZIP file above.
 
-2. Save your team number in the "config" file on the first line.
+2. Save your team number in the "Config" file on the first line.
 
 3. To log values from the Networktables, save the key Strings for those values on seperate lines below the team number
 
-4. For further clarification, look inside the "example_config" file inside the zip.
+4. For further clarification, look inside the "ExampleConfig" file inside the zip.
 
 5. Run this by using the batch file inside the zip. (all this does is use the command line to do "java -jar Logger.jar"
 
@@ -23,7 +23,7 @@ This code was written for a DriverStation NetworkTables client running Windows 1
 
 How values are saved
 
-1. Inside the extracted zip, there is a folder claled "logfiles"
+1. Inside the extracted zip, there is a folder claled "LoggerFiles"
 
 2. This folder contains all the csv files the logger has saved
 
@@ -31,4 +31,4 @@ How values are saved
 
 4. To run this, use the command line or, if on windows, just run the batch file inside the folder.
 
-5. To view how the log file is formatted, inside the extracted zip folder, click on the "log_file_format" file.
+5. To view how the log file is formatted, inside the extracted zip folder, click on the "LogFileFormat" file.
