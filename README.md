@@ -18,7 +18,7 @@ Steps to use this:
 
 Make sure you have java installed.
 
-This code was written for a DriverStation NetworkTables client running Windows 10. It will probably not work on other operating systems, but you can try. To make it work on other systems, you will need to download the correct version the jar from here: http://first.wpi.edu/FRC/roborio/maven/release/edu/wpi/first/wpilib/networktables/java/NetworkTables/3.1.7/
+This code was written for a DriverStation NetworkTables client running Windows 10. It will probably not work on other operating systems, but you can try. To make it work on other systems, you will need to download the correct version of the jar from here: http://first.wpi.edu/FRC/roborio/maven/release/edu/wpi/first/wpilib/networktables/java/NetworkTables/3.1.7/
 
 Note that link may be outdated and there might be a newer version. Download the correct version for your system and save it into the extracted zip folder instead of the version that is there.
 
