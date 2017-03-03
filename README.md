@@ -3,9 +3,10 @@
 Developed for the 2017 season to more easily view shooter velocity graphs.
 
 It uses the WPI Libraries's NetworkTable code. WPILibrary: http://first.wpi.edu/
+
 It also uses opencsv. Opencsv: http://opencsv.sourceforge.net/
 
-Run this on the same laptop that you are running your driverstation on.
+Run this on the same laptop that you are running your driverstation on. It saves logs as CSV files.
 
 Steps to use this:
 
