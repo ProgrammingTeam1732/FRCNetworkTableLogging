@@ -9,7 +9,7 @@ Steps to use this:
 
 1. Download and extract the ZIP file above.
 
-2. Save your team number in the "Config" file on the first line.
+2. Save your team number in the "Config" file on the first line. (The Config starts off with my team's config file as an example, feel free to delete all of the text inside")
 
 3. To log values from the Networktables, save the key Strings for those values on seperate lines below the team number
 
