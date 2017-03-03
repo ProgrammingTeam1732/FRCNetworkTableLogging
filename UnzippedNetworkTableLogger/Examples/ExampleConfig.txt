@@ -1,3 +1,7 @@
-1732 // team number on first line
-EncoderCounts //keys on other lines
+1732 				// team number on first line
+EncoderCounts			// keys on other lines, followed by type
+number				// types can be "number", "boolean", or "string"	
 PIDOutput
+number
+CurrentDriveTrainCommand
+string

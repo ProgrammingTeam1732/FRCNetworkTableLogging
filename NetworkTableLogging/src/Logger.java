@@ -33,25 +33,13 @@ public class Logger {
 	private static CSVWriter				csvWriter;
 
 	public static void main(String[] args) {
-		System.out.println("Application starting");
+		System.out.println("Application started");
+
 		readConfigFile();
 		initializeNetworkTableClient();
-
-		while (!table.isConnected()) {}
-
+		waitToConnect();
 		initializeLogging();
-
-		while (true) {
-			if (!table.isConnected()) {
-				if (wasConnected())
-					afterDisconnected();
-				whileDisconnected();
-			} else {
-				if (wasWaitingToConnect())
-					afterConnected();
-				whileConnected();
-			}
-		}
+		mainLoop();
 	}
 
 	/**
@@ -82,12 +70,14 @@ public class Logger {
 			e1.printStackTrace();
 		}
 		keyList.add("Time");
+		Logger.keys = new String[keyList.size()];
 		keyList.toArray(Logger.keys);
+		Logger.types = new String[typeList.size()];
 		typeList.toArray(Logger.types);
 		System.out.println("Config file:");
 		System.out.println("Team number: " + teamNumber);
 		System.out.println("Keys: " + Arrays.toString(keys));
-		System.out.println("Ty[es: " + Arrays.toString(types));
+		System.out.println("Types: " + Arrays.toString(types));
 	}
 
 	/**
@@ -105,6 +95,13 @@ public class Logger {
 		System.out.println("Disconnected, logging not initialized");
 	}
 
+	public static void waitToConnect() {
+		System.out.println("Waiting to connect to initialize logging");
+		System.out.println();
+		while (!table.isConnected()) {}
+		System.out.println();
+	}
+
 	/**
 	 * Initialize logging code<br>
 	 * Executes after connected to the NetworkTable for the first time
@@ -114,6 +111,21 @@ public class Logger {
 		openNewLogFile();
 		wasConnected = true;
 		System.out.println("Logging initialized");
+	}
+
+	public static void mainLoop() {
+		System.out.println("Running loop");
+		while (true) {
+			if (!table.isConnected()) {
+				if (wasConnected())
+					afterDisconnected();
+				whileDisconnected();
+			} else {
+				if (wasWaitingToConnect())
+					afterConnected();
+				whileConnected();
+			}
+		}
 	}
 
 	/**

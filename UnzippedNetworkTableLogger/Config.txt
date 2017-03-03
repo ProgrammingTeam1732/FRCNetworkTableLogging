@@ -1,1 +1,7 @@
 1732
+Flywheel/Encoder Velocity
+number
+Flywheel/Voltage
+number
+Flywheel/Error
+number
