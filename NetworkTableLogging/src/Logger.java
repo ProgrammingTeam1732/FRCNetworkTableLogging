@@ -15,8 +15,10 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class Logger {
 
 	// Helper fields
-	private static boolean	wasConnected	= true;
-	private static long		startTime;
+	private static boolean		wasConnected	= true;
+	private static long			startTime;
+	private static final long	waitTime		= 10;
+	private static long			loopStart		= System.currentTimeMillis();
 
 	// Config fields
 	private static final String	configFileName		= "Config.txt";
@@ -29,12 +31,13 @@ public class Logger {
 	private static NetworkTable	table;
 
 	// Logging fields
-	private static final DateTimeFormatter	dtf	= DateTimeFormatter.ofPattern("yyyy/MM/dd_HH:mm:ss");
+	private static final DateTimeFormatter	dtf	= DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
 	private static CSVWriter				csvWriter;
 
 	public static void main(String[] args) {
 		System.out.println("Application started");
 
+		addShutdownHook();
 		readConfigFile();
 		initializeNetworkTableClient();
 		waitToConnect();
@@ -95,7 +98,7 @@ public class Logger {
 		System.out.println("Disconnected, logging not initialized");
 	}
 
-	public static void waitToConnect() {
+	private static void waitToConnect() {
 		System.out.println("Waiting to connect to initialize logging");
 		System.out.println();
 		while (!table.isConnected()) {}
@@ -113,9 +116,10 @@ public class Logger {
 		System.out.println("Logging initialized");
 	}
 
-	public static void mainLoop() {
+	private static void mainLoop() {
 		System.out.println("Running loop");
 		while (true) {
+			loopStart = System.currentTimeMillis();
 			if (!table.isConnected()) {
 				if (wasConnected())
 					afterDisconnected();
@@ -125,6 +129,7 @@ public class Logger {
 					afterConnected();
 				whileConnected();
 			}
+			while (System.currentTimeMillis() - loopStart < waitTime) {}
 		}
 	}
 
@@ -154,8 +159,10 @@ public class Logger {
 
 	private static void closeLogFile() {
 		try {
-			if (csvWriter != null)
+			if (csvWriter != null) {
 				csvWriter.close();
+				csvWriter = null;
+			}
 		} catch (IOException e) {
 			System.err.println("Error closing csvWriter");
 			e.printStackTrace();
@@ -165,11 +172,11 @@ public class Logger {
 	private static void openNewLogFile() {
 		try {
 			csvWriter = new CSVWriter(new FileWriter(getCSVFileName()));
+			csvWriter.writeNext(keys);
 		} catch (IOException e) {
 			System.err.println("Error opening csvWriter");
 			e.printStackTrace();
 		}
-		csvWriter.writeNext(keys);
 		startTime = System.currentTimeMillis();
 	}
 
@@ -179,16 +186,16 @@ public class Logger {
 			if (types[i].equals("string")) {
 				values[i] = table.getString(keys[i], "null");
 			} else if (types[i].equals("number")) {
-				values[i] = "" + table.getNumber(keys[i], 0);
+				values[i] = Double.toString(table.getNumber(keys[i], 0));
 			} else if (types[i].equals("boolean")) {
-				values[i] = "" + table.getBoolean(keys[i], false);
+				values[i] = Boolean.toString(table.getBoolean(keys[i], false));
 			}
 		}
 		values[keys.length - 1] = "" + getElapsedTime();
 		csvWriter.writeNext(values);
 	}
 
-	private static final String logFront = "Log:";
+	private static final String logFront = "Log_";
 
 	private static String getCSVFileName() {
 		return loggerFilesFolder + "\\" + logFront + dtf.format(LocalDateTime.now()) + ".csv";
@@ -198,11 +205,22 @@ public class Logger {
 		return System.currentTimeMillis() - startTime;
 	}
 
-	public static boolean wasWaitingToConnect() {
+	private static boolean wasWaitingToConnect() {
 		return !wasConnected;
 	}
 
-	public static boolean wasConnected() {
+	private static boolean wasConnected() {
 		return wasConnected;
 	}
+
+	private static void addShutdownHook() {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.println("Application terminating");
+				Logger.closeLogFile();
+			}
+		});
+	}
+
 }
